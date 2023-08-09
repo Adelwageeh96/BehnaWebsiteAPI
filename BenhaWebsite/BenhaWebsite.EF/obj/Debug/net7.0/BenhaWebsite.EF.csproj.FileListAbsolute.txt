@@ -1,0 +1,17 @@
+D:\Project\BenhaWebsiteApi\BenhaWebsite\BenhaWebsite.EF\bin\Debug\net7.0\BenhaWebsite.EF.deps.json
+D:\Project\BenhaWebsiteApi\BenhaWebsite\BenhaWebsite.EF\bin\Debug\net7.0\BenhaWebsite.EF.runtimeconfig.json
+D:\Project\BenhaWebsiteApi\BenhaWebsite\BenhaWebsite.EF\bin\Debug\net7.0\BenhaWebsite.EF.dll
+D:\Project\BenhaWebsiteApi\BenhaWebsite\BenhaWebsite.EF\bin\Debug\net7.0\BenhaWebsite.EF.pdb
+D:\Project\BenhaWebsiteApi\BenhaWebsite\BenhaWebsite.EF\bin\Debug\net7.0\BenhaWebsite.Core.dll
+D:\Project\BenhaWebsiteApi\BenhaWebsite\BenhaWebsite.EF\bin\Debug\net7.0\BenhaWebsite.Core.pdb
+D:\Project\BenhaWebsiteApi\BenhaWebsite\BenhaWebsite.EF\obj\Debug\net7.0\BenhaWebsite.EF.csproj.AssemblyReference.cache
+D:\Project\BenhaWebsiteApi\BenhaWebsite\BenhaWebsite.EF\obj\Debug\net7.0\BenhaWebsite.EF.GeneratedMSBuildEditorConfig.editorconfig
+D:\Project\BenhaWebsiteApi\BenhaWebsite\BenhaWebsite.EF\obj\Debug\net7.0\BenhaWebsite.EF.AssemblyInfoInputs.cache
+D:\Project\BenhaWebsiteApi\BenhaWebsite\BenhaWebsite.EF\obj\Debug\net7.0\BenhaWebsite.EF.AssemblyInfo.cs
+D:\Project\BenhaWebsiteApi\BenhaWebsite\BenhaWebsite.EF\obj\Debug\net7.0\BenhaWebsite.EF.csproj.CoreCompileInputs.cache
+D:\Project\BenhaWebsiteApi\BenhaWebsite\BenhaWebsite.EF\obj\Debug\net7.0\BenhaWebsite.EF.csproj.CopyComplete
+D:\Project\BenhaWebsiteApi\BenhaWebsite\BenhaWebsite.EF\obj\Debug\net7.0\BenhaWebsite.EF.dll
+D:\Project\BenhaWebsiteApi\BenhaWebsite\BenhaWebsite.EF\obj\Debug\net7.0\refint\BenhaWebsite.EF.dll
+D:\Project\BenhaWebsiteApi\BenhaWebsite\BenhaWebsite.EF\obj\Debug\net7.0\BenhaWebsite.EF.pdb
+D:\Project\BenhaWebsiteApi\BenhaWebsite\BenhaWebsite.EF\obj\Debug\net7.0\BenhaWebsite.EF.genruntimeconfig.cache
+D:\Project\BenhaWebsiteApi\BenhaWebsite\BenhaWebsite.EF\obj\Debug\net7.0\ref\BenhaWebsite.EF.dll

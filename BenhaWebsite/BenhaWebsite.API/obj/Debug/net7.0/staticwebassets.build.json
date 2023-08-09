@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "Pwv9cIF8fTRnTi5kdhEyJVLCvLBfArAtdDxFDShibQU=",
+  "Source": "BenhaWebsite.API",
+  "BasePath": "_content/BenhaWebsite.API",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
