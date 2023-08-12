@@ -1,9 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "8hcGVQioYQBB3m5OtnHUKq2mkaY7fbFzTURS6GIuObSfOrFYKK6QpN9y1ul0wCdVR+63QLfQaGoglhlrCh0Wqg==",
+  "dgSpecHash": "sO1NhQm04DipRhuAwy5sw4UQ6mXYbdPL0iheFjhnMlSp3kMWD3Bb20+JfTgoMT1HDoZp3LUS3qou8i2Sw6uS3A==",
   "success": true,
   "projectFilePath": "D:\\Project\\BenhaWebsiteApi\\BenhaWebsite\\BenhaWebsite.Core\\BenhaWebsite.Core.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\LAPTOP\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
+    "C:\\Users\\LAPTOP\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",
+    "C:\\Users\\LAPTOP\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
     "C:\\Users\\LAPTOP\\.nuget\\packages\\microsoft.entityframeworkcore\\7.0.9\\microsoft.entityframeworkcore.7.0.9.nupkg.sha512",
     "C:\\Users\\LAPTOP\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\7.0.9\\microsoft.entityframeworkcore.abstractions.7.0.9.nupkg.sha512",
     "C:\\Users\\LAPTOP\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\7.0.9\\microsoft.entityframeworkcore.analyzers.7.0.9.nupkg.sha512",

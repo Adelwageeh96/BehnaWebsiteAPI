@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "6DYO5U/zKPXCwONaHhXQyLg7uUyfpi2PMdK66v8Xfbp5QoqdUH/5ZUmn0o01/Can06z29/yCRc7S2xzKIr+GKg==",
+  "dgSpecHash": "1D47QmS2Gd9YiRVRQtBkYcjUumpYZ1tnrrNC0xfCkCCVgnp+YUFZLiyoEr14PrlDRQpU1+xOmQxneQTR/6WuYw==",
   "success": true,
   "projectFilePath": "D:\\Project\\BenhaWebsiteApi\\BenhaWebsite\\BenhaWebsite.API\\BenhaWebsite.API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\LAPTOP\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
+    "C:\\Users\\LAPTOP\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",
     "C:\\Users\\LAPTOP\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\LAPTOP\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",
     "C:\\Users\\LAPTOP\\.nuget\\packages\\humanizer\\2.14.1\\humanizer.2.14.1.nupkg.sha512",

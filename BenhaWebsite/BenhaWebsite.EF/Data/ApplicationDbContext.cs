@@ -39,7 +39,26 @@ namespace BenhaWebsite.EF.Data
             new MentorOfCmapConfigurations().Configure(builder.Entity<MentorOfCmap>());
             new SessionFeedbackConfigurations().Configure(builder.Entity<SessionFeedback>());
             new TraineesAttendenceConfigurations().Configure(builder.Entity<TraineesAttendence>());
+            new NewRegistrationConfigurations().Configure(builder.Entity<NewRegistration>());
+            new StuffArchiveConfigurations().Configure(builder.Entity<StuffArchive>());
+            new TraineeArchiveConfigurations().Configure(builder.Entity<TraineeArchive>());
             
         }
+
+        DbSet<TraineeSheetAccess> TraineesSheetsAccess { get; set; }
+        DbSet<SessionFeedback> SessionsFeedbacks { get; set; }
+        DbSet<MentorOfCmap> MentorsOfCamps { get; set; }
+        DbSet<MentorAttendence> MentorsAttendences { get; set; }
+        DbSet<Material> Materials { get; set; }
+        DbSet<TraineeArchive> TraineesArchives { get; set; }
+        DbSet<Trainee> Trainees { get; set; }
+        DbSet<Session> Sessions { get; set; }
+        DbSet<TraineesAttendence> TraineesAttednces { get; set; }
+        DbSet<Sheet> Sheets { get; set; }
+        DbSet<StuffArchive> StuffArchives { get; set; }
+        DbSet<NewRegistration> NewRegitserations { get; set; }
+        DbSet<Mentor> Mentors { get; set; }
+        DbSet<Camp> Camps { get; set; }
+
     }
 }
