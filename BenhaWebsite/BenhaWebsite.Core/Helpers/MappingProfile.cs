@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BenhaWebsite.Core.Dtos.AuthenticationDtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,10 @@ namespace BenhaWebsite.Core.Helpers
 {
     public class MappingProfile : Profile
     {
+		public MappingProfile()
+		{
+			
+		}
 
     }
 }

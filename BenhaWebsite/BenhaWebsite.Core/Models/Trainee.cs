@@ -9,7 +9,7 @@ namespace BenhaWebsite.Core.Models
     public class Trainee
     {
         public int Id { get; set; }
-        public int TotalSolvedProblems { get; set; }
+        public int TotalSolvedProblems { get; set; } = 0;
         public DateTime LastSubmession { get; set; }
         public int Points { get; set; }
         public string UserId { get; set; }

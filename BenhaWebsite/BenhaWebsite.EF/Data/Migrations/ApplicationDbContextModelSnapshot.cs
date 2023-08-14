@@ -33,6 +33,9 @@ namespace BenhaWebsite.EF.Data.Migrations
                     b.Property<int>("DurationInWeeks")
                         .HasColumnType("int");
 
+                    b.Property<int>("HeadOfCampId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -46,7 +49,44 @@ namespace BenhaWebsite.EF.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("HeadOfCampId");
+
                     b.ToTable("Camps");
+                });
+
+            modelBuilder.Entity("BenhaWebsite.Core.Models.EmployeeRegisterationCode", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("RoleName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("EmployeeRegisterations");
+                });
+
+            modelBuilder.Entity("BenhaWebsite.Core.Models.HeadOfCamp", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("HeadOfCamp");
                 });
 
             modelBuilder.Entity("BenhaWebsite.Core.Models.Material", b =>
@@ -483,21 +523,22 @@ namespace BenhaWebsite.EF.Data.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<string>("FacebookLink")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int>("Gender")
-                        .HasColumnType("int");
+                    b.Property<string>("Gender")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<byte>("Grade")
                         .HasColumnType("tinyint");
 
                     b.Property<DateTime>("JoinDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("LastLoginDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("LastName")
@@ -514,7 +555,8 @@ namespace BenhaWebsite.EF.Data.Migrations
                     b.Property<string>("NationalId")
                         .IsRequired()
                         .HasMaxLength(14)
-                        .HasColumnType("nvarchar(14)");
+                        .HasColumnType("nchar(14)")
+                        .IsFixedLength();
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
@@ -528,7 +570,9 @@ namespace BenhaWebsite.EF.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(11)
+                        .HasColumnType("nchar(11)")
+                        .IsFixedLength();
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
@@ -575,9 +619,12 @@ namespace BenhaWebsite.EF.Data.Migrations
 
                     b.HasIndex("VjudgeHandle")
                         .IsUnique()
-                        .HasFilter("[VjudgeHandle] IS NOT NULL");
+                        .HasFilter("VjudgeHandle IS NOT NULL");
 
-                    b.ToTable("Accounts", (string)null);
+                    b.ToTable("Accounts", null, t =>
+                        {
+                            t.HasCheckConstraint("CK_Gender", "Gender in ('Male','Female')");
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -711,6 +758,26 @@ namespace BenhaWebsite.EF.Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("UserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("BenhaWebsite.Core.Models.Camp", b =>
+                {
+                    b.HasOne("BenhaWebsite.Core.Models.HeadOfCamp", "HeadOfCamp")
+                        .WithMany("Camps")
+                        .HasForeignKey("HeadOfCampId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("HeadOfCamp");
+                });
+
+            modelBuilder.Entity("BenhaWebsite.Core.Models.HeadOfCamp", b =>
+                {
+                    b.HasOne("BenhaWebsite.EF.ApplicationUser", null)
+                        .WithOne("HeadOfCamp")
+                        .HasForeignKey("BenhaWebsite.Core.Models.HeadOfCamp", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("BenhaWebsite.Core.Models.Material", b =>
@@ -924,6 +991,11 @@ namespace BenhaWebsite.EF.Data.Migrations
                     b.Navigation("Trainees");
                 });
 
+            modelBuilder.Entity("BenhaWebsite.Core.Models.HeadOfCamp", b =>
+                {
+                    b.Navigation("Camps");
+                });
+
             modelBuilder.Entity("BenhaWebsite.Core.Models.Mentor", b =>
                 {
                     b.Navigation("MentorOfCmaps");
@@ -960,6 +1032,9 @@ namespace BenhaWebsite.EF.Data.Migrations
 
             modelBuilder.Entity("BenhaWebsite.EF.ApplicationUser", b =>
                 {
+                    b.Navigation("HeadOfCamp")
+                        .IsRequired();
+
                     b.Navigation("Mentor")
                         .IsRequired();
 

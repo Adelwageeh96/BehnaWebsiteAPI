@@ -264,3 +264,4 @@ D:\Project\BenhaWebsiteApi\BenhaWebsite\BenhaWebsite.API\bin\Debug\net7.0\Micros
 D:\Project\BenhaWebsiteApi\BenhaWebsite\BenhaWebsite.API\bin\Debug\net7.0\Microsoft.Extensions.DependencyModel.dll
 D:\Project\BenhaWebsiteApi\BenhaWebsite\BenhaWebsite.API\bin\Debug\net7.0\Mono.TextTemplating.dll
 D:\Project\BenhaWebsiteApi\BenhaWebsite\BenhaWebsite.API\bin\Debug\net7.0\System.CodeDom.dll
+D:\Project\BenhaWebsiteApi\BenhaWebsite\BenhaWebsite.API\bin\Debug\net7.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll

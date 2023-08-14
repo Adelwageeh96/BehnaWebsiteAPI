@@ -6,6 +6,11 @@ using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using System.Text;
 using BenhaWebsite.Core.Helpers;
+using BenhaWebsite.EF;
+using Microsoft.AspNetCore.Identity;
+using BenhaWebsite.EF.Repositories;
+using BenhaWebsite.Core.IRepositories;
+using BenhaWebsite.Core;
 
 namespace BenhaWebsite.API
 {
@@ -19,7 +24,9 @@ namespace BenhaWebsite.API
             builder.Services.AddAutoMapper(typeof(MappingProfile));
             builder.Services.Configure<JWT>(builder.Configuration.GetSection("JWT"));
             builder.Services.AddDbContext<ApplicationDbContext>(service => service.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
+            builder.Services.AddScoped<IAuthRepository,AuthRepository>();
+            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             builder.Services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

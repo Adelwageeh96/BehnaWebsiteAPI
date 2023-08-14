@@ -59,6 +59,7 @@ namespace BenhaWebsite.EF.Data
         DbSet<NewRegistration> NewRegitserations { get; set; }
         DbSet<Mentor> Mentors { get; set; }
         DbSet<Camp> Camps { get; set; }
+        DbSet<EmployeeRegisterationCode> EmployeeRegisterations { get; set; }
 
     }
 }
