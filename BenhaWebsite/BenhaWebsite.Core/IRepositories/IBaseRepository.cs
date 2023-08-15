@@ -10,7 +10,7 @@ namespace BenhaWebsite.Core.IRepositories
 	public interface IBaseRepository<T> where T : class
 	{
 		Task<T> GetByIdAsync<t>(t id);
-		void Add(T model);
+		Task Add(T model);
 		void Delete(T model);
 	}
 }

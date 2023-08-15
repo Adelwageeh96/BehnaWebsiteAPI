@@ -265,3 +265,8 @@ D:\Project\BenhaWebsiteApi\BenhaWebsite\BenhaWebsite.API\bin\Debug\net7.0\Micros
 D:\Project\BenhaWebsiteApi\BenhaWebsite\BenhaWebsite.API\bin\Debug\net7.0\Mono.TextTemplating.dll
 D:\Project\BenhaWebsiteApi\BenhaWebsite\BenhaWebsite.API\bin\Debug\net7.0\System.CodeDom.dll
 D:\Project\BenhaWebsiteApi\BenhaWebsite\BenhaWebsite.API\bin\Debug\net7.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+D:\Project\BenhaWebsiteApi\BenhaWebsite\BenhaWebsite.API\bin\Debug\net7.0\BouncyCastle.Cryptography.dll
+D:\Project\BenhaWebsiteApi\BenhaWebsite\BenhaWebsite.API\bin\Debug\net7.0\MailKit.dll
+D:\Project\BenhaWebsiteApi\BenhaWebsite\BenhaWebsite.API\bin\Debug\net7.0\MimeKit.dll
+D:\Project\BenhaWebsiteApi\BenhaWebsite\BenhaWebsite.API\bin\Debug\net7.0\System.Security.Cryptography.Pkcs.dll
+D:\Project\BenhaWebsiteApi\BenhaWebsite\BenhaWebsite.API\bin\Debug\net7.0\runtimes\win\lib\net7.0\System.Security.Cryptography.Pkcs.dll

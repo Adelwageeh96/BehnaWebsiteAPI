@@ -21,7 +21,7 @@ namespace BenhaWebsite.API.Controllers
 		{
 			var result = await _authRepository.RegisterAsync(dto);
 			if (!result.IsAuthenticated)
-				return NotFound(result.Message);
+				return BadRequest(result.Message);
 			return Ok(result);
 		}
 
@@ -30,8 +30,16 @@ namespace BenhaWebsite.API.Controllers
 		{
 			var result = await _authRepository.GetTokenAsync(dto);
 			if (!result.IsAuthenticated)
-				return NotFound(result.Message);
+				return BadRequest(result.Message);
 			return Ok(result);
+		}
+		[HttpPost("ConfirmEmail")]
+		public async Task<IActionResult> ConfirmEmail([FromQuery] string userId,[FromQuery]string token)
+		{
+			string result = await _authRepository.ConfirmEmailAsync(userId, token);
+			if (!string.IsNullOrEmpty(result))
+				return BadRequest(result);
+			return Ok("Email Confirmed");
 		}
 
 	}

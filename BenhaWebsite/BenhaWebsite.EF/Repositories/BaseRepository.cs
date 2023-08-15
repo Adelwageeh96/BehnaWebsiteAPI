@@ -17,9 +17,9 @@ namespace BenhaWebsite.EF.Repositories
 			_context = context;
 		}
 		public async Task<T> GetByIdAsync<t>(t id) => await _context.Set<T>().FindAsync(id);
-		public async void Add(T model) => await _context.Set<T>().AddAsync(model);
+		public async Task Add(T model) => await _context.Set<T>().AddAsync(model);
 		
-		public  void Delete(T model)=> _context.Set<T>().Remove(model);
+		public void  Delete(T model)=>  _context.Set<T>().Remove(model);
 	}
 
 }

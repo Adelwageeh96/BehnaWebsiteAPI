@@ -1,4 +1,5 @@
-﻿using BenhaWebsite.Core;
+﻿using Azure.Core;
+using BenhaWebsite.Core;
 using BenhaWebsite.Core.Dtos.AuthenticationDtos;
 using BenhaWebsite.Core.Helpers;
 using BenhaWebsite.Core.Helpers.Constants;
@@ -23,15 +24,17 @@ namespace BenhaWebsite.EF.Repositories
 	{
 		private readonly UserManager<ApplicationUser> _userManager;
         private readonly IUnitOfWork _unitOfWork;
+		private readonly IMailingRepository _mailingRepository;
 		private readonly JWT _jwt;
 
 		private List<string> _allowedExtenstions = new List<string> { ".JPG", ".PNG" };
 		private long _maxAllowedProfilePhotoSize = 3145728;
-		public AuthRepository(UserManager<ApplicationUser> userManager,IUnitOfWork unitOfWork,IOptions<JWT> jwt)
+		public AuthRepository(UserManager<ApplicationUser> userManager, IUnitOfWork unitOfWork, IOptions<JWT> jwt, IMailingRepository mailingRepository)
 		{
 			_userManager = userManager;
 			_unitOfWork = unitOfWork;
 			_jwt = jwt.Value;
+			_mailingRepository = mailingRepository;
 		}
 
 		public async Task<AuthDto> RegisterAsync(RegisterDto dto)
@@ -106,8 +109,25 @@ namespace BenhaWebsite.EF.Repositories
 			}
 
 			await _userManager.AddToRoleAsync(user, Role.User);
-			var jwtSecurityToken = await CreateJwtTokenAsync(user);
 
+			var emailConfirmationToken = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+			var userIdParameter = $"userId={Uri.EscapeDataString(user.Id)}";
+			var tokenParameter = $"token={Uri.EscapeDataString(emailConfirmationToken)}";
+			var query = $"{userIdParameter}&{tokenParameter}";
+			var uriBuilder = new UriBuilder
+			{
+				Scheme = "https",
+				Host = "localhost",
+				Port = 7070,
+				Path = "api/Auth/ConfirmEmail",
+				Query = query,
+			};
+
+			var confirmationUrl = uriBuilder.ToString();
+			string subject = "Confirm Your Email";
+			string message = $"Please confirm your email by clicking <a href='{confirmationUrl}'>here</a>.";
+			await _mailingRepository.SendEmailAsync(user.Email,subject ,message );
+			var jwtSecurityToken = await CreateJwtTokenAsync(user);
 			return new AuthDto
 			{
 				Email = user.Email,
@@ -129,7 +149,7 @@ namespace BenhaWebsite.EF.Repositories
 				user = await _userManager.FindByEmailAsync(dto.UserIdentifier);
 				if(user is null)
 				{
-					authDto.Message = "Invaild Login";
+					authDto.Message = "Invaild login attempt"; 
 					return authDto;
 				}
 			}
@@ -138,14 +158,19 @@ namespace BenhaWebsite.EF.Repositories
 				user = await _userManager.FindByNameAsync(dto.UserIdentifier);
 				if (user is null)
 				{
-					authDto.Message = "Invaild Login";
+					authDto.Message = "Invaild login attempt";
 					return authDto;
 				}
+			}
+			if(!await _userManager.IsEmailConfirmedAsync(user))
+			{
+				authDto.Message = "Invaild login attempt";
+				return authDto;
 			}
 
 			if(!await _userManager.CheckPasswordAsync(user, dto.Password))
 			{
-				authDto.Message="Invaild Login";
+				authDto.Message="Invaild login attempt";
 				return authDto;
 			}
 			var jwtSecurityToken= await CreateJwtTokenAsync(user);
@@ -161,6 +186,14 @@ namespace BenhaWebsite.EF.Repositories
 			return authDto;
 		}
 
+		public async Task<string> ConfirmEmailAsync(string userId, string token)
+		{
+			var user = await _userManager.FindByIdAsync(userId);
+			if ( user is null )
+				return $"Invaild confirm email";
+			var result=await _userManager.ConfirmEmailAsync(user, token);
+			return (!result.Succeeded) ? String.Join("\n", result.Errors) : String.Empty;
+		}
 
 		private async Task<JwtSecurityToken> CreateJwtTokenAsync(ApplicationUser user)
 		{
