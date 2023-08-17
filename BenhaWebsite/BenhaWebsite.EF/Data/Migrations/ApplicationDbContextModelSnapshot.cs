@@ -167,69 +167,6 @@ namespace BenhaWebsite.EF.Data.Migrations
                     b.ToTable("MentorsOfCamps");
                 });
 
-            modelBuilder.Entity("BenhaWebsite.Core.Models.NewRegistration", b =>
-                {
-                    b.Property<string>("NationalID")
-                        .HasMaxLength(14)
-                        .HasColumnType("nvarchar(14)");
-
-                    b.Property<DateTime>("BirthDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CodeForceHandle")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("College")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FacebookLink")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Gender")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Grade")
-                        .HasColumnType("int");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<byte[]>("ProfilePictrue")
-                        .HasColumnType("varbinary(max)");
-
-                    b.Property<bool?>("Status")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("VjudgeHandle")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("NationalID");
-
-                    b.HasIndex("CodeForceHandle")
-                        .IsUnique();
-
-                    b.HasIndex("VjudgeHandle")
-                        .IsUnique()
-                        .HasFilter("[VjudgeHandle] IS NOT NULL");
-
-                    b.ToTable("NewRegitserations");
-                });
-
             modelBuilder.Entity("BenhaWebsite.Core.Models.Session", b =>
                 {
                     b.Property<int>("Id")
@@ -315,55 +252,6 @@ namespace BenhaWebsite.EF.Data.Migrations
                     b.ToTable("Sheets");
                 });
 
-            modelBuilder.Entity("BenhaWebsite.Core.Models.StuffArchive", b =>
-                {
-                    b.Property<string>("NationalID")
-                        .HasMaxLength(14)
-                        .HasColumnType("nvarchar(14)");
-
-                    b.Property<DateTime>("BirthDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CodeForceHandle")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("College")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FacebookLink")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Gender")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Grade")
-                        .HasColumnType("int");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("VjudgeHandle")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("NationalID");
-
-                    b.ToTable("StuffArchives");
-                });
-
             modelBuilder.Entity("BenhaWebsite.Core.Models.Trainee", b =>
                 {
                     b.Property<int>("Id")
@@ -401,62 +289,6 @@ namespace BenhaWebsite.EF.Data.Migrations
                         .IsUnique();
 
                     b.ToTable("Trainees");
-                });
-
-            modelBuilder.Entity("BenhaWebsite.Core.Models.TraineeArchive", b =>
-                {
-                    b.Property<string>("NationalID")
-                        .HasMaxLength(14)
-                        .HasColumnType("nvarchar(14)");
-
-                    b.Property<DateTime>("BirthDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CmapName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CodeForceHandle")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("College")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FacebookLink")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Gender")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Grade")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("IsCompleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("VjudgeHandle")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("NationalID");
-
-                    b.ToTable("TraineesArchives");
                 });
 
             modelBuilder.Entity("BenhaWebsite.Core.Models.TraineeSheetAccess", b =>
