@@ -139,6 +139,21 @@ namespace BenhaWebsite.EF.Repositories
 			};
 		}
 
+		public async Task<string> ConfirmEmailAsync(string userId, string token)
+		{
+			if (userId is null || token is null)
+				return $"Can't confirm email!";
+			var user = await _userManager.FindByIdAsync(userId);
+			if (user is null)
+				return $"Can't confirm email!";
+			var result = await _userManager.ConfirmEmailAsync(user, token);
+
+			return (!result.Succeeded) ? String.Join("\n", result.Errors) : String.Empty;
+		}
+
+
+
+
 		public async Task<AuthDto> GetTokenAsync(TokenRequestDto dto)
 		{
 			AuthDto authDto = new();
@@ -186,14 +201,39 @@ namespace BenhaWebsite.EF.Repositories
 			return authDto;
 		}
 
-		public async Task<string> ConfirmEmailAsync(string userId, string token)
+
+		public async Task<ForgetPasswordDto> ForgetPasswordAsync(ForgetPasswordDto dto)
 		{
-			var user = await _userManager.FindByIdAsync(userId);
-			if ( user is null )
-				return $"Invaild confirm email";
-			var result=await _userManager.ConfirmEmailAsync(user, token);
-			return (!result.Succeeded) ? String.Join("\n", result.Errors) : String.Empty;
+			ForgetPasswordDto resDto = new();
+			var vaildEmail = new EmailAddressAttribute().IsValid(dto.UserIdentifier);
+			ApplicationUser? user = new();
+			if (vaildEmail)
+			{
+				user = await _userManager.FindByEmailAsync(dto.UserIdentifier);
+				if (user is null)
+				{
+					resDto.Message = "There is no user with this information";
+					return resDto;
+				}
+			}
+			else
+			{
+				user = await _userManager.FindByNameAsync(dto.UserIdentifier);
+				if (user is null)
+				{
+					resDto.Message = "There is no user with this information";
+					return resDto;
+				}
+			}
+			resDto.FirstName = dto.FirstName;
+			resDto.LastName = dto.LastName;
+			resDto.UserIdentifier = user.Email;
+			return resDto;
 		}
+
+
+
+
 
 		private async Task<JwtSecurityToken> CreateJwtTokenAsync(ApplicationUser user)
 		{
@@ -224,6 +264,9 @@ namespace BenhaWebsite.EF.Repositories
 
 			return jwtSecurityToken;
 		}
+
+
+
 		private async Task<bool> AddEmployeeAsync(AddEmployeeDto dto)
 		{
 			var employeeRole = await _unitOfWork.EmployeeRegisterationCodes.GetByIdAsync<Guid>(new Guid(dto.RegistrationCode));
@@ -233,13 +276,13 @@ namespace BenhaWebsite.EF.Repositories
 				if (employeeRole.RoleName == Role.Mentor)
 				{
 					 await _userManager.AddToRoleAsync(user, employeeRole.RoleName);
-					_unitOfWork.Mentors.Add(new Mentor { UserId = dto.UserId });
+					 await _unitOfWork.Mentors.Add(new Mentor { UserId = dto.UserId });
 					_unitOfWork.Complete();
 				}
 				else if (employeeRole.RoleName == Role.HeadOfCamp)
 				{
 					 await _userManager.AddToRoleAsync(user, employeeRole.RoleName);
-					_unitOfWork.HeadOfCamps.Add(new HeadOfCamp { UserId= dto.UserId });
+					await _unitOfWork.HeadOfCamps.Add(new HeadOfCamp { UserId= dto.UserId });
 					_unitOfWork.Complete();
 				}
 				else

@@ -33,14 +33,24 @@ namespace BenhaWebsite.API.Controllers
 				return BadRequest(result.Message);
 			return Ok(result);
 		}
-		[HttpPost("ConfirmEmail")]
+		[HttpGet("ConfirmEmail")]
 		public async Task<IActionResult> ConfirmEmail([FromQuery] string userId,[FromQuery]string token)
 		{
 			string result = await _authRepository.ConfirmEmailAsync(userId, token);
 			if (!string.IsNullOrEmpty(result))
 				return BadRequest(result);
 			return Ok("Email Confirmed");
+
 		}
+		[HttpPost]
+		public async Task<IActionResult> ForgetPassword(ForgetPasswordDto dto)
+		{
+			var result= await _authRepository.ForgetPasswordAsync(dto);
+			if (!string.IsNullOrEmpty(result.Message))
+				return BadRequest(result.Message);
+			return Ok(result);
+		}
+
 
 	}
 }
