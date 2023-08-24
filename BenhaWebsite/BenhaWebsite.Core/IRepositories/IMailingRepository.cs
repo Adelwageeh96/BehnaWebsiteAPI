@@ -9,6 +9,6 @@ namespace BenhaWebsite.Core.IRepositories
 {
 	public interface IMailingRepository
 	{
-		Task SendEmailAsync(string emailTo, string subject, string body, IList<IFormFile> attachments = null);
+		 Task SendEmailAsync(string emailTo, string subject, string body, IList<IFormFile> attachments = null);
 	}
 }

@@ -21,9 +21,9 @@ namespace BenhaWebsite.EF.Repositories
 		{
 			_mailSettings= mailSettings.Value;
 		}
-		public async Task SendEmailAsync(string emailTo,string subject,string body,IList<IFormFile>attachments=null)
+		public async Task SendEmailAsync(string emailTo, string subject, string body, IList<IFormFile> attachments = null)
 		{
-		
+
 			var email = new MimeMessage
 			{
 				Sender = MailboxAddress.Parse(_mailSettings.Email),
@@ -32,25 +32,25 @@ namespace BenhaWebsite.EF.Repositories
 			email.To.Add(MailboxAddress.Parse(emailTo));
 
 			var builer = new BodyBuilder();
-			if(attachments is not null)
+			if (attachments is not null)
 			{
 				byte[] fileBytes;
 				foreach (var file in attachments)
 				{
 					if (file.Length > 0)
 					{
-						using var ms= new MemoryStream();
+						using var ms = new MemoryStream();
 						file.CopyTo(ms);
 						fileBytes = ms.ToArray();
-						builer.Attachments.Add(file.FileName,fileBytes,ContentType.Parse(file.ContentType));
+						builer.Attachments.Add(file.FileName, fileBytes, ContentType.Parse(file.ContentType));
 					}
 				}
 			}
-			builer.HtmlBody= body;
-			email.Body=builer.ToMessageBody();
-			email.From.Add(new MailboxAddress(_mailSettings.DisplayName,_mailSettings.Email));
+			builer.HtmlBody = body;
+			email.Body = builer.ToMessageBody();
+			email.From.Add(new MailboxAddress(_mailSettings.DisplayName, _mailSettings.Email));
 			using var smtp = new SmtpClient();
-			smtp.Connect(_mailSettings.Host, _mailSettings.Port,SecureSocketOptions.StartTls);
+			smtp.Connect(_mailSettings.Host, _mailSettings.Port, SecureSocketOptions.StartTls);
 			smtp.Authenticate(_mailSettings.Email, _mailSettings.Password);
 			await smtp.SendAsync(email);
 

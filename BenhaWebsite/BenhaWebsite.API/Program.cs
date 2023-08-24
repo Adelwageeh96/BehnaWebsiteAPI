@@ -23,7 +23,7 @@ namespace BenhaWebsite.API
 
             // Add services to the container.
             builder.Services.AddAutoMapper(typeof(MappingProfile));
-
+            builder.Services.AddHttpClient();
             builder.Services.Configure<JWT>(builder.Configuration.GetSection("JWT"));
             builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
 
