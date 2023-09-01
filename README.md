@@ -15,9 +15,6 @@ The UML diagram above provides an overview of the project's architecture and dat
 ## Current Progress
 
 - Implemented user authentication and registration.
-- Developed the camp application and acceptance process.
-- Created mentor-trainee relationships.
-- Integrated roles for head of camp and manager.
 
 ## API Endpoints
 
