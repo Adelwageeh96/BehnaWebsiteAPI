@@ -8,6 +8,7 @@ using BenhaWebsite.Core.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Primitives;
 using Microsoft.Identity.Client;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -28,19 +29,19 @@ namespace BenhaWebsite.EF.Repositories
 		private readonly UserManager<ApplicationUser> _userManager;
         private readonly IUnitOfWork _unitOfWork;
 		private readonly IMailingRepository _mailingRepository;
-		private readonly HttpClient _httpClient;
+		private readonly ICodeforcesRepository _codeforcesRepository;
 		private readonly JWT _jwt;
 		
 
 		private List<string> _allowedExtenstions = new List<string> { ".JPG", ".PNG" };
 		private long _maxAllowedProfilePhotoSize = 3145728;
-		public AuthRepository(UserManager<ApplicationUser> userManager, IUnitOfWork unitOfWork, IOptions<JWT> jwt, IMailingRepository mailingRepository, HttpClient httpClient)
+		public AuthRepository(UserManager<ApplicationUser> userManager, IUnitOfWork unitOfWork, IOptions<JWT> jwt, IMailingRepository mailingRepository, ICodeforcesRepository codeforcesRepository)
 		{
 			_userManager = userManager;
 			_unitOfWork = unitOfWork;
 			_jwt = jwt.Value;
 			_mailingRepository = mailingRepository;
-			_httpClient = httpClient;
+			_codeforcesRepository = codeforcesRepository;
 		}
 
 		public async Task<AuthDto> RegisterAsync(RegisterDto dto)
@@ -51,10 +52,8 @@ namespace BenhaWebsite.EF.Repositories
 				errors.Add("Email already used!");
 			if (await _userManager.FindByNameAsync(dto.UserName) is not null)
 				errors.Add("User Name already used!");
-			if (_userManager.Users.Any(u => u.NationalId == dto.NationalId))
-				errors.Add("National ID already used!");
 
-			if (await CheckHandleValidity(dto.CodeforceHandle))
+			if (await _codeforcesRepository.CheckHandleValidity(dto.CodeforceHandle))
 			{
 				if (_userManager.Users.Any(u => u.CodeforceHandle == dto.CodeforceHandle))
 					errors.Add("Codeforce Handle already used!");
@@ -62,17 +61,12 @@ namespace BenhaWebsite.EF.Repositories
 			else
 				errors.Add("Invaild codeforce handle");
 
-			if (!string.IsNullOrEmpty(dto.VjudgeHandle) && _userManager.Users.Any(u => u.VjudgeHandle == dto.VjudgeHandle))
-				errors.Add("Vjudge Handle already used!");
 
 			if (_userManager.Users.Any(u => u.PhoneNumber == dto.PhoneNumber))
 				errors.Add("Phone Number already used!");
 
 			if (dto.PhoneNumber.Length != 11)
 				errors.Add("Phone Number should be 11 digits long!");
-
-			if (dto.NationalId.Length != 14)
-				errors.Add("National ID should be 14 characters long!");
 
 			var fileExtension = Path.GetExtension(dto.ProfilePicture.FileName)?.ToUpper();
 			if (!_allowedExtenstions.Contains(fileExtension))
@@ -92,13 +86,9 @@ namespace BenhaWebsite.EF.Repositories
 				FirstName = dto.FirstName,
 				LastName = dto.LastName,
 				Email = dto.Email,
-				NationalId = dto.NationalId,
 				CodeforceHandle = dto.CodeforceHandle,
 				PhoneNumber = dto.PhoneNumber,
 				FacebookLink = dto.FacebookLink,
-				VjudgeHandle = dto.VjudgeHandle,
-				Grade = dto.Grade,
-				College = dto.College,
 				BirthDate = dto.BirthDate,
 				Gender = dto.Gender,
 				ProfilePicture = dataStream.ToArray(),
@@ -150,14 +140,14 @@ namespace BenhaWebsite.EF.Repositories
 			};
 		}
 
-		public async Task<string> ConfirmEmailAsync(string userId, string token)
+		public async Task<string> ConfirmEmailAsync(ConfirmEmailDto dto)
 		{
-			if (userId is null || token is null)
+			if (dto.UserId is null || dto.Token is null)
 				return $"Can't confirm email!";
-			var user = await _userManager.FindByIdAsync(userId);
+			var user = await _userManager.FindByIdAsync(dto.UserId);
 			if (user is null)
 				return $"Can't confirm email!";
-			var result = await _userManager.ConfirmEmailAsync(user, token);
+			var result = await _userManager.ConfirmEmailAsync(user, dto.Token);
 
 			return (!result.Succeeded) ? String.Join("\n", result.Errors) : String.Empty;
 		}
@@ -190,7 +180,7 @@ namespace BenhaWebsite.EF.Repositories
 			}
 			if(!await _userManager.IsEmailConfirmedAsync(user))
 			{
-				authDto.Message = "Invaild login attempt";
+				authDto.Message = "Please confirm your email first";
 				return authDto;
 			}
 
@@ -247,12 +237,16 @@ namespace BenhaWebsite.EF.Repositories
 		//{
 
 		//}
-		[HttpGet("Users")]
-		public async Task<IEnumerable<string>> GetUsers()
+	
+		public async Task<string> ConfirmChangePasswordAsync(ResetPasswordDto dto)
 		{
-			var users=  _userManager.Users.Select(u=>u.FirstName).ToList();
-			return users;
+			var user = await _userManager.FindByIdAsync(dto.UserId);
+			if (user is null)
+				return $"Can't change password!";
+			var result= await _userManager.ResetPasswordAsync(user,dto.Token,dto.Password);
+			return (!result.Succeeded) ? String.Join("\n", result.Errors) : String.Empty;
 		}
+
 
 
 
@@ -317,23 +311,7 @@ namespace BenhaWebsite.EF.Repositories
 			return false;
 		}
 
-		private async Task<bool> CheckHandleValidity(string handle)
-		{
-			string apiUrl = $"https://codeforces.com/api/user.info?handles={handle}";
-			HttpResponseMessage response = await _httpClient.GetAsync(apiUrl);
-			if (response.IsSuccessStatusCode)
-			{
-				string jsonResponse = await response.Content.ReadAsStringAsync();
-				var options = new JsonSerializerOptions { PropertyNameCaseInsensitive=true };
-				
-				CodeforcesApiResponse apiResponse = JsonSerializer.Deserialize<CodeforcesApiResponse>(jsonResponse,options);
-				if (apiResponse.Status is "OK" && apiResponse.Result.Length > 0)
-					return true;
-			}
-			return false;
-		}
-		private record CodeforcesApiResponse (string Status , User[] Result );
-		private record User(string Handle,int Rating,string Rank);
+		
 
 
 	}

@@ -34,16 +34,16 @@ namespace BenhaWebsite.API.Controllers
 			return Ok(result);
 		}
 		[HttpGet("ConfirmEmail")]
-		public async Task<IActionResult> ConfirmEmail([FromQuery] string userId,[FromQuery]string token)
+		public async Task<IActionResult> ConfirmEmailAsync([FromQuery] string userId,[FromQuery]string token)
 		{
-			string result = await _authRepository.ConfirmEmailAsync(userId, token);
+			string result = await _authRepository.ConfirmEmailAsync(new ConfirmEmailDto { Token=token,UserId=userId});
 			if (!string.IsNullOrEmpty(result))
 				return BadRequest(result);
 			return Ok("Email Confirmed");
 
 		}
 		[HttpPost("GetUserData")]
-		public async Task<IActionResult> GetUserData(UserDataDto dto)
+		public async Task<IActionResult> GetUserDataAsync(UserDataDto dto)
 		{
 			var result= await _authRepository.GetUserDataAsync(dto);
 			if (!string.IsNullOrEmpty(result.Message))
@@ -51,11 +51,16 @@ namespace BenhaWebsite.API.Controllers
 			return Ok(result);
 		}
 
-		[HttpGet("Users")]
-		public async Task<IActionResult> GetUsers()
+		[HttpPost("ConfirmResetPassword")]
+		public async Task<IActionResult> ConfirmResetPasswordAsync(ResetPasswordDto dto)
 		{
-			return Ok(await _authRepository.GetUsers());
+			var result = await _authRepository.ConfirmChangePasswordAsync(dto);
+			if (!string.IsNullOrEmpty(result))
+				return BadRequest(result);
+			return Ok("Password reset");
 		}
+
+
 
 
 

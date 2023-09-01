@@ -12,8 +12,11 @@ namespace BenhaWebsite.EF.ModelsConfigurations
     internal class MentorConfigurations : IEntityTypeConfiguration<Mentor>
     {
         public void Configure(EntityTypeBuilder<Mentor> builder)
-        {
-            
-        }
-    }
+		{
+            builder.HasMany(m => m.Trainees).WithOne(t => t.Mentor).HasForeignKey(t => t.MentorId).OnDelete(DeleteBehavior.NoAction);
+			builder.HasMany(m => m.MentorAttendences).WithOne(ma => ma.Mentor).OnDelete(DeleteBehavior.Cascade);
+            builder.HasMany(m => m.MentorOfCmaps).WithOne(mc => mc.Mentor).OnDelete(DeleteBehavior.Cascade);
+
+		}
+	}
 }

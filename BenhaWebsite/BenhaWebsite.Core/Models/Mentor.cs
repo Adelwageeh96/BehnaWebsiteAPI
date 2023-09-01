@@ -11,7 +11,7 @@ namespace BenhaWebsite.Core.Models
         public int Id { get; set; }
         public string UserId { get; set; }
         public IEnumerable<Trainee> Trainees { get; set; }
-        public IEnumerable<MentorAttendence> mentorAttendences { get; set; }
+        public IEnumerable<MentorAttendence> MentorAttendences { get; set; }
         public IEnumerable<MentorOfCmap> MentorOfCmaps { get; set; }
 
 

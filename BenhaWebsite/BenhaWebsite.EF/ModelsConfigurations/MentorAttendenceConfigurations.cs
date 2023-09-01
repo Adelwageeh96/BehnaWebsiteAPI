@@ -14,8 +14,9 @@ namespace BenhaWebsite.EF.ModelsConfigurations
         public void Configure(EntityTypeBuilder<MentorAttendence> builder)
         {
             builder.HasKey(ma => new { ma.SessionId, ma.MentorId });
-            builder.HasOne(m=>m.Mentor).WithMany(ma=>ma.mentorAttendences).HasForeignKey(ma=>ma.MentorId);
+            builder.HasOne(m=>m.Mentor).WithMany(ma=>ma.MentorAttendences).HasForeignKey(ma=>ma.MentorId);
             builder.HasOne(s => s.Session).WithMany(ma => ma.MentorAttendences).HasForeignKey(ma => ma.SessionId);
+
         }
     }
 }

@@ -14,24 +14,14 @@ namespace BenhaWebsite.EF
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
-		public string NationalId { get; set; }
         public DateTime BirthDate { get; set; }
-        public byte Grade { get; set; }
-        public string College { get; set; }
-        public DateTime JoinDate { get; set; }
 		public string Gender { get; set; }
 		public byte[]? ProfilePicture { get; set; }
         public string CodeforceHandle { get; set;}
         public string? FacebookLink { get; set; }
-        public string? VjudgeHandle { get; set; }
         public Mentor Mentor { get; set; }
         public Trainee Trainee { get; set; }
         public HeadOfCamp HeadOfCamp { get; set; }
 
-        public ApplicationUser()
-        {
-            JoinDate = DateTime.Now;
-
-        }
     }
 }

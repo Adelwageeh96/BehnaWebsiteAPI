@@ -10,6 +10,6 @@ namespace BenhaWebsite.Core.Models
 	{
 		public int Id { get; set; }
 		public string UserId { get; set; }
-		public IEnumerable<Camp> Camps { get;set; }
+		public IEnumerable<Camp>? Camps { get;set; }
 	}
 }

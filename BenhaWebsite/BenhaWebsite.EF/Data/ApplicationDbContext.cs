@@ -39,6 +39,7 @@ namespace BenhaWebsite.EF.Data
 			new MentorOfCmapConfigurations().Configure(builder.Entity<MentorOfCmap>());
 			new SessionFeedbackConfigurations().Configure(builder.Entity<SessionFeedback>());
 			new TraineesAttendenceConfigurations().Configure(builder.Entity<TraineesAttendence>());
+			new HeadOfCampConfigurations().Configure(builder.Entity<HeadOfCamp>());
 
 		}
 

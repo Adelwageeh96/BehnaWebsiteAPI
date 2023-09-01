@@ -11,10 +11,9 @@ namespace BenhaWebsite.Core.IRepositories
 	{
 		Task<AuthDto> RegisterAsync(RegisterDto dto);
 		Task<AuthDto> GetTokenAsync(TokenRequestDto dto);
-		Task<string> ConfirmEmailAsync(string userId, string token);
+		Task<string> ConfirmEmailAsync(ConfirmEmailDto dto);
 		Task<UserDataDto> GetUserDataAsync(UserDataDto dto);
 		//	Task<bool> SendChangePasswordEmailAsync(string email);
-
-		Task<IEnumerable<string>> GetUsers();
+		Task<string> ConfirmChangePasswordAsync(ResetPasswordDto dto);
 	}
 }

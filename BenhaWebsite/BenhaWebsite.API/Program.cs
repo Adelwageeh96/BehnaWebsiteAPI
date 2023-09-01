@@ -24,6 +24,7 @@ namespace BenhaWebsite.API
             // Add services to the container.
             builder.Services.AddAutoMapper(typeof(MappingProfile));
             builder.Services.AddHttpClient();
+
             builder.Services.Configure<JWT>(builder.Configuration.GetSection("JWT"));
             builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
 
@@ -33,6 +34,7 @@ namespace BenhaWebsite.API
                 .AddEntityFrameworkStores<ApplicationDbContext>()
 				.AddTokenProvider<DataProtectorTokenProvider<ApplicationUser>>(TokenOptions.DefaultProvider);
 
+            builder.Services.AddScoped<ICodeforcesRepository, CodeforcesRepository>();
 			builder.Services.AddScoped<IAuthRepository,AuthRepository>();
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             builder.Services.AddScoped<IMailingRepository,MailingRepository>();

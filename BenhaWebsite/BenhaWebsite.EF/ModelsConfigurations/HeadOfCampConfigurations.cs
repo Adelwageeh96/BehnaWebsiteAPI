@@ -14,7 +14,7 @@ namespace BenhaWebsite.EF.ModelsConfigurations
 	{
 		public void Configure(EntityTypeBuilder<HeadOfCamp> builder)
 		{
-			
+			builder.HasMany(c => c.Camps).WithOne(h => h.HeadOfCamp).HasForeignKey(c => c.HeadOfCampId).OnDelete(DeleteBehavior.SetNull);
 		}
 	}
 }

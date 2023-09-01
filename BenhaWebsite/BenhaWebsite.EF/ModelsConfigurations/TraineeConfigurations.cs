@@ -13,7 +13,10 @@ namespace BenhaWebsite.EF.ModelsConfigurations
 	{
 		public void Configure(EntityTypeBuilder<Trainee> builder)
 		{
-
+			builder.HasOne(t => t.Mentor).WithMany(m => m.Trainees).HasForeignKey(t => t.MentorId);
+			builder.HasMany(t => t.TraineesAttendences).WithOne(ta => ta.Trainee).HasForeignKey(ta => ta.TraineeId).OnDelete(DeleteBehavior.Cascade);
+			builder.HasMany(t => t.TraineeSheetAccesses).WithOne(ta => ta.Trainee).HasForeignKey(ta => ta.TraineeId).OnDelete(DeleteBehavior.Cascade);
+			builder.HasMany(t => t.SessionFeedbacks).WithOne(ta => ta.Trainee).HasForeignKey(ta => ta.TraineeId).OnDelete(DeleteBehavior.Cascade);
 		}
 	}
 }

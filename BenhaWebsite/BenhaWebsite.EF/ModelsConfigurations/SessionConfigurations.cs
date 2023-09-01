@@ -17,9 +17,11 @@ namespace BenhaWebsite.EF.ModelsConfigurations
             builder.Property(s=>s.InstructorName).HasMaxLength(50);
             builder.Property(s => s.LocationName).HasMaxLength(100);
             builder.Property(s => s.LocationLink).HasMaxLength(200);
+            builder.HasMany(s => s.SessionFeedbacks).WithOne(sf => sf.Session).HasForeignKey(sf => sf.SessionId).OnDelete(DeleteBehavior.Cascade);
+            builder.HasMany(s => s.MentorAttendences).WithOne(sf => sf.Session).HasForeignKey(sf => sf.SessionId).OnDelete(DeleteBehavior.Cascade);
+            builder.HasMany(s => s.TraineesAttendences).WithOne(sf => sf.Session).HasForeignKey(sf => sf.SessionId).OnDelete(DeleteBehavior.Cascade);
 
 
-
-        }
+		}
     }
 }

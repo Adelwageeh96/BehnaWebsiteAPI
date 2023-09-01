@@ -14,6 +14,7 @@ namespace BenhaWebsite.EF.ModelsConfigurations
         public void Configure(EntityTypeBuilder<Sheet> builder)
         {
             builder.Property(s => s.Name).HasMaxLength(250);
+            builder.HasMany(s=>s.traineeSheetAccesses).WithOne(tsa => tsa.Sheet).HasForeignKey(tsa=>tsa.sheetId).OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

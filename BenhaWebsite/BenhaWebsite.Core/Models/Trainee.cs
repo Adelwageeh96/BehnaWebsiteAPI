@@ -13,8 +13,8 @@ namespace BenhaWebsite.Core.Models
         public DateTime LastSubmession { get; set; }
         public int Points { get; set; }
         public string UserId { get; set; }
-        public int MentorId { get; set; }
-        public Mentor Mentor { get; set; }
+        public int? MentorId { get; set; }
+        public Mentor? Mentor { get; set; }
         public int CampId { get; set; }
         public Camp Camp { get; set; }
         public IEnumerable<TraineesAttendence> TraineesAttendences { get; set; }

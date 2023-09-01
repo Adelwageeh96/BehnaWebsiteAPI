@@ -33,7 +33,7 @@ namespace BenhaWebsite.EF.Data.Migrations
                     b.Property<int>("DurationInWeeks")
                         .HasColumnType("int");
 
-                    b.Property<int>("HeadOfCampId")
+                    b.Property<int?>("HeadOfCampId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -239,6 +239,9 @@ namespace BenhaWebsite.EF.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int?>("CampId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(250)
@@ -247,7 +250,12 @@ namespace BenhaWebsite.EF.Data.Migrations
                     b.Property<int>("NumberOfProblems")
                         .HasColumnType("int");
 
+                    b.Property<int>("SheetOrder")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("CampId");
 
                     b.ToTable("Sheets");
                 });
@@ -266,7 +274,7 @@ namespace BenhaWebsite.EF.Data.Migrations
                     b.Property<DateTime>("LastSubmession")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("MentorId")
+                    b.Property<int?>("MentorId")
                         .HasColumnType("int");
 
                     b.Property<int>("Points")
@@ -339,11 +347,6 @@ namespace BenhaWebsite.EF.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("College")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
@@ -367,12 +370,6 @@ namespace BenhaWebsite.EF.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<byte>("Grade")
-                        .HasColumnType("tinyint");
-
-                    b.Property<DateTime>("JoinDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -383,12 +380,6 @@ namespace BenhaWebsite.EF.Data.Migrations
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("NationalId")
-                        .IsRequired()
-                        .HasMaxLength(14)
-                        .HasColumnType("nchar(14)")
-                        .IsFixedLength();
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
@@ -422,9 +413,6 @@ namespace BenhaWebsite.EF.Data.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
-                    b.Property<string>("VjudgeHandle")
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("CodeforceHandle")
@@ -433,9 +421,6 @@ namespace BenhaWebsite.EF.Data.Migrations
                     b.HasIndex("Email")
                         .IsUnique()
                         .HasFilter("[Email] IS NOT NULL");
-
-                    b.HasIndex("NationalId")
-                        .IsUnique();
 
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
@@ -448,10 +433,6 @@ namespace BenhaWebsite.EF.Data.Migrations
                     b.HasIndex("PhoneNumber")
                         .IsUnique()
                         .HasFilter("[PhoneNumber] IS NOT NULL");
-
-                    b.HasIndex("VjudgeHandle")
-                        .IsUnique()
-                        .HasFilter("VjudgeHandle IS NOT NULL");
 
                     b.ToTable("Accounts", null, t =>
                         {
@@ -597,8 +578,7 @@ namespace BenhaWebsite.EF.Data.Migrations
                     b.HasOne("BenhaWebsite.Core.Models.HeadOfCamp", "HeadOfCamp")
                         .WithMany("Camps")
                         .HasForeignKey("HeadOfCampId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("HeadOfCamp");
                 });
@@ -635,7 +615,7 @@ namespace BenhaWebsite.EF.Data.Migrations
             modelBuilder.Entity("BenhaWebsite.Core.Models.MentorAttendence", b =>
                 {
                     b.HasOne("BenhaWebsite.Core.Models.Mentor", "Mentor")
-                        .WithMany("mentorAttendences")
+                        .WithMany("MentorAttendences")
                         .HasForeignKey("MentorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -700,6 +680,16 @@ namespace BenhaWebsite.EF.Data.Migrations
                     b.Navigation("Trainee");
                 });
 
+            modelBuilder.Entity("BenhaWebsite.Core.Models.Sheet", b =>
+                {
+                    b.HasOne("BenhaWebsite.Core.Models.Camp", "Camp")
+                        .WithMany("Sheets")
+                        .HasForeignKey("CampId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("Camp");
+                });
+
             modelBuilder.Entity("BenhaWebsite.Core.Models.Trainee", b =>
                 {
                     b.HasOne("BenhaWebsite.Core.Models.Camp", "Camp")
@@ -711,8 +701,7 @@ namespace BenhaWebsite.EF.Data.Migrations
                     b.HasOne("BenhaWebsite.Core.Models.Mentor", "Mentor")
                         .WithMany("Trainees")
                         .HasForeignKey("MentorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("BenhaWebsite.EF.ApplicationUser", null)
                         .WithOne("Trainee")
@@ -820,6 +809,8 @@ namespace BenhaWebsite.EF.Data.Migrations
 
                     b.Navigation("Sessions");
 
+                    b.Navigation("Sheets");
+
                     b.Navigation("Trainees");
                 });
 
@@ -830,11 +821,11 @@ namespace BenhaWebsite.EF.Data.Migrations
 
             modelBuilder.Entity("BenhaWebsite.Core.Models.Mentor", b =>
                 {
+                    b.Navigation("MentorAttendences");
+
                     b.Navigation("MentorOfCmaps");
 
                     b.Navigation("Trainees");
-
-                    b.Navigation("mentorAttendences");
                 });
 
             modelBuilder.Entity("BenhaWebsite.Core.Models.Session", b =>
