@@ -16,9 +16,6 @@ The UML diagram above provides an overview of the project's architecture and dat
 
 - Implemented user authentication and registration.
 
-## API Endpoints
-
-For detailed documentation on API endpoints, please refer to the [API Endpoints Documentation](docs/api-endpoints.md).
 
 ## Skills and Technologies
 
