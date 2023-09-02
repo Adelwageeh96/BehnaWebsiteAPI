@@ -7,8 +7,9 @@ This project is a problem-solving website designed to help programmers improve t
 
 ## UML Diagram
 
+![UML-Digram](https://github.com/Adelwageeh96/BehnaWebsiteAPI/assets/96920426/d11c8e8d-4735-455e-919d-3ac5faa1bdb9)
 
-![UML-Diagram](https://github.com/Adelwageeh96/BehnaWebsiteAPI/assets/96920426/9a6561b1-d22f-4ceb-bc5e-6eb510896285)
+
 
 The UML diagram above provides an overview of the project's architecture and data flow.
 
