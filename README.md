@@ -1,5 +1,5 @@
 # BehnaWebsiteAPI
-Api for Benha problem-solving community (Not official)
+Api for Benha problem-solving community (unofficial)
 
 ## Project Description
 
