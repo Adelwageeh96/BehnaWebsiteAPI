@@ -17,12 +17,14 @@ namespace BenhaWebsite.EF
 		public IBaseRepository<EmployeeRegisterationCode> EmployeeRegisterationCodes { get; private set; }
 		public IBaseRepository<Mentor> Mentors { get; private set; }
 		public IBaseRepository<HeadOfCamp> HeadOfCamps { get; private set; }
+		public IBaseRepository<Camp> Camps { get; private set; }
 		public UnitOfWork(ApplicationDbContext context)
 		{
 			_context = context;
 			EmployeeRegisterationCodes =  new BaseRepository<EmployeeRegisterationCode>(context);
 			Mentors =  new BaseRepository<Mentor>(context);
 			HeadOfCamps =  new BaseRepository<HeadOfCamp>(context);
+			Camps= new BaseRepository<Camp>(context);
 		}
 
 		public int Complete()=>_context.SaveChanges();

@@ -11,8 +11,7 @@ namespace BenhaWebsite.Core.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public int Year { get; set; }
-        public int Term { get; set; }
+        public DateTime CreateTime { get; set; }
         public int DurationInWeeks { get; set; }
         public int? HeadOfCampId { get; set; }
         public HeadOfCamp? HeadOfCamp { get; set; }
@@ -21,5 +20,10 @@ namespace BenhaWebsite.Core.Models
         public IEnumerable<MentorOfCmap> MentorOfCmaps { get; set; }
         
         public IEnumerable<Sheet> Sheets { get; set; }
+
+        public Camp()
+        {
+            CreateTime = DateTime.Now;
+        }
     }
 }

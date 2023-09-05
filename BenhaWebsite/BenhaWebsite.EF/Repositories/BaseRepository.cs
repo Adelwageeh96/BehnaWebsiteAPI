@@ -1,5 +1,7 @@
 ﻿using BenhaWebsite.Core.IRepositories;
 using BenhaWebsite.EF.Data;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.SqlServer.Query.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +18,7 @@ namespace BenhaWebsite.EF.Repositories
 		{
 			_context = context;
 		}
+		public async Task<IEnumerable<T>> GetAllAsync() => await _context.Set<T>().ToListAsync();
 		public async Task<T> GetByIdAsync<t>(t id) => await _context.Set<T>().FindAsync(id);
 		public async Task Add(T model) => await _context.Set<T>().AddAsync(model);
 		

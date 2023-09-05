@@ -14,6 +14,8 @@ namespace BenhaWebsite.Core
 		public IBaseRepository<Mentor> Mentors { get; }
 		public IBaseRepository<HeadOfCamp> HeadOfCamps { get; }
 
+		public IBaseRepository<Camp> Camps { get; }
+
 		int Complete();
 	}
 }

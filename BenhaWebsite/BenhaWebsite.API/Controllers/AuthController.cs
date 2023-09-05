@@ -10,7 +10,7 @@ namespace BenhaWebsite.API.Controllers
 	public class AuthController : ControllerBase
 	{
 		private readonly IAuthRepository _authRepository;
-
+        
 		public AuthController(IAuthRepository authRepository)
 		{
 			_authRepository = authRepository;
