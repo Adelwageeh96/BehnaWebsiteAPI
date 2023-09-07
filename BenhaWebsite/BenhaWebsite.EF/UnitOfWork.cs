@@ -18,6 +18,9 @@ namespace BenhaWebsite.EF
 		public IBaseRepository<Mentor> Mentors { get; private set; }
 		public IBaseRepository<HeadOfCamp> HeadOfCamps { get; private set; }
 		public IBaseRepository<Camp> Camps { get; private set; }
+		public IBaseRepository<Trainee> Trainees { get; private set; }
+		public IBaseRepository<Sheet> Sheets { get; private set; }
+
 		public UnitOfWork(ApplicationDbContext context)
 		{
 			_context = context;
@@ -25,6 +28,8 @@ namespace BenhaWebsite.EF
 			Mentors =  new BaseRepository<Mentor>(context);
 			HeadOfCamps =  new BaseRepository<HeadOfCamp>(context);
 			Camps= new BaseRepository<Camp>(context);
+			Trainees= new BaseRepository<Trainee>(context);
+			Sheets= new BaseRepository<Sheet>(context);
 		}
 
 		public int Complete()=>_context.SaveChanges();

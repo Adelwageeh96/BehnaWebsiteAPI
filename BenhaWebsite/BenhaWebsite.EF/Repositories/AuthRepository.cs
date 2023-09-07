@@ -292,19 +292,19 @@ namespace BenhaWebsite.EF.Repositories
 				if (employeeRole.RoleName == Role.Mentor)
 				{
 					 await _userManager.AddToRoleAsync(user, employeeRole.RoleName);
-					 await _unitOfWork.Mentors.Add(new Mentor { UserId = dto.UserId });
+					 await _unitOfWork.Mentors.AddAsync(new Mentor { UserId = dto.UserId });
 					_unitOfWork.Complete();
 				}
 				else if (employeeRole.RoleName == Role.HeadOfCamp)
 				{
 					 await _userManager.AddToRoleAsync(user, employeeRole.RoleName);
-					await _unitOfWork.HeadOfCamps.Add(new HeadOfCamp { UserId= dto.UserId });
+					await _unitOfWork.HeadOfCamps.AddAsync(new HeadOfCamp { UserId= dto.UserId });
 					_unitOfWork.Complete();
 				}
 				else
 					await _userManager.AddToRoleAsync(user, employeeRole.RoleName);
 
-				_unitOfWork.EmployeeRegisterationCodes.Delete(employeeRole);
+				await _unitOfWork.EmployeeRegisterationCodes.DeleteAsync(employeeRole);
 				_unitOfWork.Complete();
 				return true;
 			}

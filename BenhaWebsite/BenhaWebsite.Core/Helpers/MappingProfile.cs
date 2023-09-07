@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using BenhaWebsite.Core.Dtos.AuthenticationDtos;
+using BenhaWebsite.Core.Dtos.CampDtos;
+using BenhaWebsite.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +14,7 @@ namespace BenhaWebsite.Core.Helpers
     {
 		public MappingProfile()
 		{
-			
+			CreateMap<CampAddEditDto, Camp>().ReverseMap();
 		}
 
     }

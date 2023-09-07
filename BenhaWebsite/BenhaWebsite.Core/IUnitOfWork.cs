@@ -13,8 +13,9 @@ namespace BenhaWebsite.Core
 		public IBaseRepository<EmployeeRegisterationCode> EmployeeRegisterationCodes { get; }
 		public IBaseRepository<Mentor> Mentors { get; }
 		public IBaseRepository<HeadOfCamp> HeadOfCamps { get; }
-
 		public IBaseRepository<Camp> Camps { get; }
+		public IBaseRepository<Sheet> Sheets { get; }
+		public IBaseRepository<Trainee> Trainees { get; }
 
 		int Complete();
 	}

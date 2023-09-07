@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
@@ -11,7 +12,9 @@ namespace BenhaWebsite.Core.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        [NotMapped]
         public DateTime CreateTime { get; set; }
+        public string Description { get; set; }
         public int DurationInWeeks { get; set; }
         public int? HeadOfCampId { get; set; }
         public HeadOfCamp? HeadOfCamp { get; set; }
